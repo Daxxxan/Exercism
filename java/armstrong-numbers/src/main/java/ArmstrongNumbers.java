@@ -3,11 +3,11 @@ import java.util.logging.Logger;
 class ArmstrongNumbers {
 
 	boolean isArmstrongNumber(int numberToCheck) {
-		String number = String.valueOf(numberToCheck);
+		String numberToCheckAsString = String.valueOf(numberToCheck);
 
-		int result = number.chars()
-				.map(num -> num - '0')
-				.map(num -> (int)Math.pow(num, number.length()))
+		int result = numberToCheckAsString.chars()
+				.map(charDigit -> charDigit - '0')
+				.map(digit -> (int)Math.pow(digit, numberToCheckAsString.length()))
 				.sum();
 
 		return result == numberToCheck;
