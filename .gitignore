@@ -1,6 +1,5 @@
-/.idea/
-/*/*/.exercism/
-/*/*/.gradle/
-/*/*/build/
-/*/*/.idea/
-/*/*/out/
+*\.gradle\
+*\.exercism\
+*\build\
+*\.idea\
+*\out\
