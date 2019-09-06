@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 class DnDCharacter {
 
@@ -19,19 +20,14 @@ class DnDCharacter {
     }
 
     int ability() {
-        int[] throwResult = throwDices();
-        Arrays.sort(throwResult);
-        return throwResult[1] + throwResult[2] + throwResult[3];
+        return Arrays.stream(throwDices())
+                .sorted()
+                .skip(1)
+                .sum();
     }
 
     private int[] throwDices() {
-        int[] throwResult = new int[4];
-
-        for(int i = 0; i < 4; i++) {
-            throwResult[i] = throwDice();
-        }
-
-        return throwResult;
+        return IntStream.range(0, 4).map(dice -> throwDice()).toArray();
     }
 
     private int throwDice() {
