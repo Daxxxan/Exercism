@@ -1,43 +1,18 @@
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 class Acronym {
-    private String phrase;
+    private String acronym;
 
     Acronym(String phrase) {
-        this.phrase = phrase;
+        this.acronym = Stream.of(phrase.replace('-', ' ').replace('_', ' ').split(" "))
+                .filter(splitString -> !splitString.isEmpty())
+                .map(string -> string.charAt(0))
+                .map(firstCharacter -> firstCharacter.toString().toUpperCase())
+                .collect(Collectors.joining());
     }
 
     String get() {
-        ArrayList decomposedPhrase = new ArrayList<String>(Arrays.asList(this.phrase.split("[ \\-]")));
-        StringBuilder result = new StringBuilder();
-
-        decomposedPhrase.forEach(
-                phrase -> {
-                    String acronymString = phrase.toString().toUpperCase();
-                    char acronymLetter = getFirstLetter(acronymString);
-
-                    if(Character.isLetter(acronymLetter)) {
-                        result.append(acronymLetter);
-                    }
-                }
-        );
-
-        return result.toString();
+        return this.acronym;
     }
-
-    private char getFirstLetter(String acronymString) {
-        if(acronymString.length() == 0) {
-            return ' ';
-        } else {
-            for(int i = 0; i < acronymString.length(); i++) {
-                if(Character.isLetter(acronymString.charAt(i))) {
-                    return acronymString.charAt(i);
-                }
-            }
-        }
-
-        return ' ';
-    }
-
 }
