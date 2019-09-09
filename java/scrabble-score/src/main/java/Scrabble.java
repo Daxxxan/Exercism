@@ -20,13 +20,9 @@ class Scrabble {
     }
 
     private int calculateWordScore(String word) {
-        int score = 0;
-
-        for(int i = 0; i < word.length(); i++) {
-            score += scrabbleScore.get(word.charAt(i));
-        }
-
-        return score;
+        return word.chars()
+                .map(letter -> this.scrabbleScore.get((char) letter))
+                .sum();
     }
 
     int getScore() {
