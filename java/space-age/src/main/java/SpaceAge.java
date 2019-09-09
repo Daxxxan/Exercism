@@ -1,7 +1,7 @@
 class SpaceAge {
 
     private double seconds;
-    private static final double EARTH_PERIOD = 365.25;
+    private static final double EARTH_YEAR_IN_SECOND = 31557600;
 
     private enum Planet {
         MERCURY(0.2408467),
@@ -29,39 +29,42 @@ class SpaceAge {
     }
 
     double secondByYear(double earthYear) {
-        return earthYear * EARTH_PERIOD * 24 * 60 * 60;
+        return earthYear * EARTH_YEAR_IN_SECOND;
     }
 
     double onEarth() {
-        return this.seconds / secondByYear(Planet.EARTH.earthYear);
+        return getOrbitalAge(Planet.EARTH);
     }
 
     double onMercury() {
-        return this.seconds / secondByYear(Planet.MERCURY.earthYear);
+        return getOrbitalAge(Planet.MERCURY);
     }
 
     double onVenus() {
-        return this.seconds / secondByYear(Planet.VENUS.earthYear);
+        return getOrbitalAge(Planet.VENUS);
     }
 
     double onMars() {
-        return this.seconds / secondByYear(Planet.MARS.earthYear);
+        return getOrbitalAge(Planet.MARS);
     }
 
     double onJupiter() {
-        return this.seconds / secondByYear(Planet.JUPITER.earthYear);
+        return getOrbitalAge(Planet.JUPITER);
     }
 
     double onSaturn() {
-        return this.seconds / secondByYear(Planet.SATURN.earthYear);
+        return getOrbitalAge(Planet.SATURN);
     }
 
     double onUranus() {
-        return this.seconds / secondByYear(Planet.URANUS.earthYear);
+        return getOrbitalAge(Planet.URANUS);
     }
 
     double onNeptune() {
-        return this.seconds / secondByYear(Planet.NEPTUNE.earthYear);
+        return getOrbitalAge(Planet.NEPTUNE);
     }
 
+    private double getOrbitalAge(Planet planet) {
+        return this.seconds / secondByYear(planet.earthYear);
+    }
 }
