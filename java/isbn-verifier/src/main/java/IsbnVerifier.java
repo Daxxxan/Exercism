@@ -2,6 +2,7 @@ class IsbnVerifier {
 
     boolean isValid(String stringToVerify) {
         int isbnTotal = 0;
+        char charToTest;
         stringToVerify = removeDashCharacter(stringToVerify);
 
         if(isbnLengthIsValid(stringToVerify)) {
@@ -9,19 +10,37 @@ class IsbnVerifier {
         }
 
         for(int i = 0; i < stringToVerify.length(); i++) {
-            if(('X' == stringToVerify.charAt(i) && i != stringToVerify.length() - 1)
-                    || ('X' != stringToVerify.charAt(i) && Character.isLetter(stringToVerify.charAt(i)))) {
-                return false;
-            }
+            charToTest = stringToVerify.charAt(i);
 
-            if(stringToVerify.charAt(i) == 'X' && i == stringToVerify.length() - 1) {
-                isbnTotal += 10;
-            } else {
-                isbnTotal += Integer.parseInt(String.valueOf(stringToVerify.charAt(i))) * (10 - i);
+            if((charIsValid(charToTest) && !charPositionIsValid(stringToVerify.length() - 1, i))
+                    || characterIsNotAnX(charToTest)) {
+                return false;
+            }else {
+                isbnTotal += calculateIsbn(charToTest, stringToVerify, i);
             }
         }
 
         return isbnTotal % 11 == 0;
+    }
+
+    private int calculateIsbn(char charToTest, String stringToVerify, int currentPosition) {
+        if(charIsValid(charToTest) && charPositionIsValid(stringToVerify.length() - 1, currentPosition)) {
+            return  10;
+        } else {
+            return Integer.parseInt(String.valueOf(charToTest)) * (10 - currentPosition);
+        }
+    }
+
+    private boolean charPositionIsValid(int positionOfTheLastCharacter, int currentPosition) {
+        return currentPosition == positionOfTheLastCharacter;
+    }
+
+    private boolean charIsValid(char charToTest) {
+        return 'X' == charToTest;
+    }
+
+    private boolean characterIsNotAnX(char charToTest) {
+        return ('X' != charToTest && Character.isLetter(charToTest));
     }
 
     private boolean isbnLengthIsValid(String stringToVerify) {
