@@ -15,7 +15,7 @@ class IsbnVerifier {
             if((charIsValid(charToTest) && !charPositionIsValid(stringToVerify.length() - 1, i))
                     || characterIsNotAnX(charToTest)) {
                 return false;
-            }else {
+            } else {
                 isbnTotal += calculateIsbn(charToTest, stringToVerify, i);
             }
         }
@@ -25,7 +25,7 @@ class IsbnVerifier {
 
     private int calculateIsbn(char charToTest, String stringToVerify, int currentPosition) {
         if(charIsValid(charToTest) && charPositionIsValid(stringToVerify.length() - 1, currentPosition)) {
-            return  10;
+            return 10;
         } else {
             return Integer.parseInt(String.valueOf(charToTest)) * (10 - currentPosition);
         }
@@ -40,7 +40,7 @@ class IsbnVerifier {
     }
 
     private boolean characterIsNotAnX(char charToTest) {
-        return ('X' != charToTest && Character.isLetter(charToTest));
+        return 'X' != charToTest && Character.isLetter(charToTest);
     }
 
     private boolean isbnLengthIsValid(String stringToVerify) {
@@ -50,5 +50,4 @@ class IsbnVerifier {
     private String removeDashCharacter(String stringToVerify) {
         return stringToVerify.replace("-", "");
     }
-
 }
