@@ -2,17 +2,15 @@ class IsbnVerifier {
 
     boolean isValid(String stringToVerify) {
         int isbnTotal = 0;
-        stringToVerify = stringToVerify.replace("-", "");
+        stringToVerify = removeDashCharacter(stringToVerify);
 
-        if(stringToVerify.length() != 10) {
+        if(isbnLengthIsValid(stringToVerify)) {
             return false;
         }
 
         for(int i = 0; i < stringToVerify.length(); i++) {
-            if(
-                    ('X' == stringToVerify.charAt(i) && i != stringToVerify.length() - 1) ||
-                    ('X' != stringToVerify.charAt(i) && Character.isLetter(stringToVerify.charAt(i)))
-            ) {
+            if(('X' == stringToVerify.charAt(i) && i != stringToVerify.length() - 1)
+                    || ('X' != stringToVerify.charAt(i) && Character.isLetter(stringToVerify.charAt(i)))) {
                 return false;
             }
 
@@ -24,6 +22,14 @@ class IsbnVerifier {
         }
 
         return isbnTotal % 11 == 0;
+    }
+
+    private boolean isbnLengthIsValid(String stringToVerify) {
+        return stringToVerify.length() != 10;
+    }
+
+    private String removeDashCharacter(String stringToVerify) {
+        return stringToVerify.replace("-", "");
     }
 
 }
