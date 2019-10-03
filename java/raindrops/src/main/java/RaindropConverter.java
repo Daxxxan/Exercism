@@ -1,7 +1,3 @@
-import java.util.ArrayList;
-
-import static java.lang.Math.sqrt;
-
 class RaindropConverter {
 
     String convert(int number) {
