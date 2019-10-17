@@ -4,9 +4,9 @@ namespace TwoFer
 {
     public static class TwoFer
     {
-        public static string Speak(string name = "you")
+        public static string Speak(string name = null)
         {
-            return "One for " + name + ", one for me.";
+            return $"One for {name ?? "you"}, one for me.";
         }
     }
 }
