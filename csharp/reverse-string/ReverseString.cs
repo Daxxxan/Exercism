@@ -3,10 +3,6 @@ using System.Linq;
 
 public static class ReverseString
 {
-    public static string Reverse(string input)
-    {
-        char[] result = input.ToCharArray();
-        Array.Reverse(result);
-        return new string(result);
-    }
+    public static string Reverse(string input) 
+        => new string(input.Reverse().ToArray());
 }
