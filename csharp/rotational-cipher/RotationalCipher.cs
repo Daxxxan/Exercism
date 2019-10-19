@@ -2,28 +2,46 @@ using System;
 using System.Linq;
 using System.Security.Cryptography;
 
-public static class RotationalCipher
+public class RotationalCipher
 {
-    public static string Rotate(string text, int shiftKey)
+    private string _text;
+    private int _shiftKey;
+
+    public RotationalCipher(string text, int shiftKey)
+    {
+        this._text = text;
+        this._shiftKey = shiftKey;
+    }
+    public string Rotate()
     {
         string result = string.Empty;
         
-        foreach (char letter in text)
+        foreach (char letter in _text)
         {
-            result += Cipher(letter, shiftKey);
+            result += Cipher(letter);
         }
 
         return result;
     }
 
-    private static char Cipher(char letter, int shiftKey)
+    private char Cipher(char letter)
     {
         if (!char.IsLetter(letter))
         {
             return letter;
         }
+        
+        return AddShiftKey(letter);
+    }
 
-        char letterReferenceFrame = char.IsUpper(letter) ? 'A' : 'a';
-        return (char) ((((letter - letterReferenceFrame) + shiftKey) % 26) + letterReferenceFrame);
+    private char AddShiftKey(char letter)
+    {
+        char letterReferenceFrame = LetterReferenceFrame(letter);
+        return (char) ((((letter - letterReferenceFrame) + _shiftKey) % 26) + letterReferenceFrame);
+    }
+
+    private char LetterReferenceFrame(char letter)
+    {
+        return char.IsUpper(letter) ? 'A' : 'a';
     }
 }
