@@ -5,32 +5,34 @@ public class BankAccount
     private decimal _balance;
     private bool _open;
 
-    public BankAccount()
-    {
-        _open = true;
-    }
-    
     public void Open()
     {
-        _balance = 0;
+        lock (this)
+        {
+            _open = true;   
+        }
     }
 
     public void Close()
     {
-        _open = false;
+        lock (this)
+        { 
+            _open = false;   
+        }
     }
 
     public decimal Balance
     {
         get
         {
-            if (_open)
+            lock (this)
             {
-                return _balance;   
-            }
-            else
-            {
-                throw new InvalidOperationException();
+                if (!_open)
+                {
+                    throw new InvalidOperationException();
+                
+                }
+                return _balance;      
             }
         }
     }
@@ -39,6 +41,10 @@ public class BankAccount
     {
         lock (this)
         {
+            if (!_open)
+            {
+                throw new InvalidOperationException();
+            }
             _balance = decimal.Add(_balance, change);
         }
     }
