@@ -12,6 +12,7 @@ public class RotationalCipher
         this._text = text;
         this._shiftKey = shiftKey;
     }
+    
     public string Rotate()
     {
         string result = string.Empty;
@@ -31,10 +32,10 @@ public class RotationalCipher
             return letter;
         }
         
-        return AddShiftKey(letter);
+        return ShiftLetter(letter);
     }
 
-    private char AddShiftKey(char letter)
+    private char ShiftLetter(char letter)
     {
         char letterReferenceFrame = LetterReferenceFrame(letter);
         return (char) ((((letter - letterReferenceFrame) + _shiftKey) % 26) + letterReferenceFrame);
