@@ -15,19 +15,24 @@ public class CircularBuffer<T>
 
     public T Read()
     {
-        if (_buffer.Count == 0)
+        if (BufferIsEmpty())
         {
             throw new InvalidOperationException();
         }
 
         var result = _buffer[0];
-        _buffer = _buffer.Skip(1).ToList();
+        Dequeue();
         return result;
+    }
+
+    private bool BufferIsEmpty()
+    {
+        return _buffer.Count == 0;
     }
 
     public void Write(T value)
     {
-        if (_buffer.Count >= _capacity)
+        if (BufferIsFull())
         {
             throw new InvalidOperationException();
         }
@@ -37,12 +42,22 @@ public class CircularBuffer<T>
 
     public void Overwrite(T value)
     {
-        if (_buffer.Count >= _capacity)
+        if (BufferIsFull())
         {
-            _buffer = _buffer.Skip(1).ToList();
+            Dequeue();
         }
         
         Write(value);
+    }
+
+    private bool BufferIsFull()
+    {
+        return _buffer.Count >= _capacity;
+    }
+
+    private void Dequeue()
+    {
+        _buffer = _buffer.Skip(1).ToList();
     }
 
     public void Clear()
