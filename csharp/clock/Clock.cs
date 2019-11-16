@@ -57,28 +57,10 @@ public class Clock
 
     public Clock Subtract(int minutesToSubtract) => new Clock(Hours, Minutes - minutesToSubtract);
 
-    public override string ToString() => FormatDate();
-
-    private string FormatDate()
-    {
-        string hours = FormatIntClockToStringClock(Hours);
-        string minutes = FormatIntClockToStringClock(Minutes);
-
-        return hours + ":" + minutes;
-    }
-
-    private string FormatIntClockToStringClock(int time)
-    {
-        if (time < 10)
-        {
-            return "0" + time;
-        }
-
-        return time.ToString();
-    }
-
+    public override string ToString() => $"{Hours:D2}:{Minutes:D2}";
+    
     public override bool Equals(object obj) =>
         obj is Clock clock 
-        && this.Hours == clock.Hours 
-        && this.Minutes == clock.Minutes;
+        && Hours == clock.Hours 
+        && Minutes == clock.Minutes;
 }
