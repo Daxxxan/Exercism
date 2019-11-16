@@ -20,19 +20,12 @@ public class Clock
     {
         HandleNegativeDate();
         
-        int minutesForOneHour = CalculateNumberMinutesForOneHour();
         int hoursInMinutes = CalculateNumberHoursInMinutes();
         
-        _hours = CalculateNumberHoursForOneDay(_hours) + CalculateNumberHoursForOneDay(hoursInMinutes);
-        _minutes = minutesForOneHour;
+        _hours = CalculateNumberHoursForOneDay(_hours + hoursInMinutes);
+        _minutes = CalculateNumberMinutesForOneHour();
     }
-
-    private int CalculateNumberHoursForOneDay(int hours) => hours % HoursPerDay;
     
-    private int CalculateNumberMinutesForOneHour() => _minutes % MinutesPerHour;
-    
-    private int CalculateNumberHoursInMinutes() => _minutes / MinutesPerHour;
-
     private void HandleNegativeDate()
     {
         if (_minutes < 0)
@@ -46,6 +39,12 @@ public class Clock
         }
     }
 
+    private int CalculateNumberHoursForOneDay(int hours) => hours % HoursPerDay;
+    
+    private int CalculateNumberMinutesForOneHour() => _minutes % MinutesPerHour;
+    
+    private int CalculateNumberHoursInMinutes() => _minutes / MinutesPerHour;
+
     private void HandleNegativeHours() => _hours = CalculateNumberHoursForOneDay(_hours) + 24;
 
     private void HandleNegativeMinutes()
@@ -54,15 +53,9 @@ public class Clock
         _minutes = CalculateNumberMinutesForOneHour() + 60;
     }
     
-    public Clock Add(int minutesToAdd)
-    {
-        throw new NotImplementedException("You need to implement this function.");
-    }
+    public Clock Add(int minutesToAdd) => new Clock(_hours, _minutes + minutesToAdd);
 
-    public Clock Subtract(int minutesToSubtract)
-    {
-        throw new NotImplementedException("You need to implement this function.");
-    }
+    public Clock Subtract(int minutesToSubtract) => new Clock(_hours, _minutes - minutesToSubtract);
 
     public override string ToString() => FormatDate();
 
