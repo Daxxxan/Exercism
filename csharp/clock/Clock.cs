@@ -5,13 +5,13 @@ public class Clock
     private const int HoursPerDay = 24;
     private const int MinutesPerHour = 60;
 
-    private int _hours;
-    private int _minutes;
+    private int Hours { get; set; }
+    private int Minutes { get; set; }
 
     public Clock(int hours, int minutes)
     {
-        _hours = hours;
-        _minutes = minutes;
+        Hours = hours;
+        Minutes = minutes;
         
         CalculateDate();   
     }
@@ -22,18 +22,18 @@ public class Clock
         
         int hoursInMinutes = CalculateNumberHoursInMinutes();
         
-        _hours = CalculateNumberHoursForOneDay(_hours + hoursInMinutes);
-        _minutes = CalculateNumberMinutesForOneHour();
+        Hours = CalculateNumberHoursForOneDay(Hours + hoursInMinutes);
+        Minutes = CalculateNumberMinutesForOneHour();
     }
     
     private void HandleNegativeDate()
     {
-        if (_minutes < 0)
+        if (Minutes < 0)
         {
             HandleNegativeMinutes();
         }
      
-        if (_hours < 0)
+        if (Hours < 0)
         {
             HandleNegativeHours();
         }
@@ -41,28 +41,28 @@ public class Clock
 
     private int CalculateNumberHoursForOneDay(int hours) => hours % HoursPerDay;
     
-    private int CalculateNumberMinutesForOneHour() => _minutes % MinutesPerHour;
+    private int CalculateNumberMinutesForOneHour() => Minutes % MinutesPerHour;
     
-    private int CalculateNumberHoursInMinutes() => _minutes / MinutesPerHour;
+    private int CalculateNumberHoursInMinutes() => Minutes / MinutesPerHour;
 
-    private void HandleNegativeHours() => _hours = CalculateNumberHoursForOneDay(_hours) + 24;
+    private void HandleNegativeHours() => Hours = CalculateNumberHoursForOneDay(Hours) + 24;
 
     private void HandleNegativeMinutes()
     {
-        _hours += (CalculateNumberHoursInMinutes() - 1);
-        _minutes = CalculateNumberMinutesForOneHour() + 60;
+        Hours += (CalculateNumberHoursInMinutes() - 1);
+        Minutes = CalculateNumberMinutesForOneHour() + 60;
     }
     
-    public Clock Add(int minutesToAdd) => new Clock(_hours, _minutes + minutesToAdd);
+    public Clock Add(int minutesToAdd) => new Clock(Hours, Minutes + minutesToAdd);
 
-    public Clock Subtract(int minutesToSubtract) => new Clock(_hours, _minutes - minutesToSubtract);
+    public Clock Subtract(int minutesToSubtract) => new Clock(Hours, Minutes - minutesToSubtract);
 
     public override string ToString() => FormatDate();
 
     private string FormatDate()
     {
-        string hours = FormatIntClockToStringClock(_hours);
-        string minutes = FormatIntClockToStringClock(_minutes);
+        string hours = FormatIntClockToStringClock(Hours);
+        string minutes = FormatIntClockToStringClock(Minutes);
 
         return hours + ":" + minutes;
     }
@@ -76,4 +76,9 @@ public class Clock
 
         return time.ToString();
     }
+
+    public override bool Equals(object obj) =>
+        obj is Clock clock 
+        && this.Hours == clock.Hours 
+        && this.Minutes == clock.Minutes;
 }
